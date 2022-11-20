@@ -12,7 +12,7 @@ function Trending() {
                         <Search/>
                         <ButtonUser/>
                     </div>
-                    Trending page
+                    <h2 className='font-mono text-center text-3xl text-fuchsia-700'>Trending page</h2>  
                 </div>
         </div>
      );

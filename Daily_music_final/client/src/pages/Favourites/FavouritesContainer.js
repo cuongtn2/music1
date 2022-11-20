@@ -1,17 +1,17 @@
-import PlayCard from "../../components/Card/PlayCard";
+import PlayCardFauvorites from "../../components/Card/PlayCardFauvorites";
 
 
-function HomeContainer({data}) {
+function FavouritesContainer({data}) {
     return ( 
         <div className="mb-4 min-w-full">
             <div className="grid grid-cols-5 gap-x-6">
                 {data && data.map((song, i) => (
                     // <h1>{song._id}</h1>
-                    <PlayCard key={song._id} data={song} index={i}/>
+                    <PlayCardFauvorites key={song._id} data={song} index={i}/>
                 ))}
             </div>
         </div>
      );
 }
 
-export default HomeContainer;
+export default FavouritesContainer;

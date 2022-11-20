@@ -4,7 +4,7 @@ import { RiPlayListFill } from 'react-icons/ri';
 import { useStateValue } from '../context/StateProvider';
 import AudioPlayer from 'react-h5-audio-player'
 import 'react-h5-audio-player/lib/styles.css';
-import { getAllSongs } from '../api';
+import { getAllSongs, getFavourites } from '../api';
 import { actionType } from '../context/reducer';
 import { IoClose, IoMusicalNote } from 'react-icons/io5';
 
@@ -110,7 +110,7 @@ function MusicPlayer() {
 
 //hiện bảng playlist khi bấm icon playlist 
 export const PlayListCard = () => {
-    const [{ allSongs, songIndex, isSongPlaying }, dispatch] = useStateValue()
+    const [{ allSongs, songIndex, isSongPlaying , user , listPlayList }, dispatch] = useStateValue()
 
     useEffect(() => {
         if(!allSongs) {
@@ -121,6 +121,17 @@ export const PlayListCard = () => {
                 })
             })
         }
+        console.log('allSongs',allSongs)
+        console.log('listPlayList',listPlayList)
+        if(!listPlayList){
+            getFavourites(user.user._id).then((data) => {
+                console.log('datalist',data.user.playlist)
+                dispatch({
+                    type : actionType.SET_All_PLAYLIST,
+                    listPlayList : data.user.playlist,
+                })
+            })
+        } 
     }, [])
 
     const setCurrentPlaySong = (index) => {
@@ -143,8 +154,8 @@ export const PlayListCard = () => {
 
     return (
         <div className='absolute left-4 bottom-24 py-2 w-350 max-w-[350px] h-510 max-h-[510px] flex flex-col overflow-y-scroll rounded-md shadow-md bg-primary'>
-            {allSongs.length > 0 ? (
-                allSongs.map((music, index) => (
+            {listPlayList ? (
+                listPlayList.map((music, index) => (
                     <motion.div
                         initial={{ opacity : 0, translateX : -50 }}
                         animate={{ opacity : 1, translateX: 0 }}

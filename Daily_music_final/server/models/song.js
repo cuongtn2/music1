@@ -29,6 +29,10 @@ const songSchema = mongoose.Schema(
             type : String,
             require : true,
         },
+        user: {
+            type : mongoose.Schema.Types.ObjectId,
+            ref: 'user'
+        }
     },
     { timestamps: true}
 );

@@ -33,6 +33,7 @@ function Home() {
                     <Search/>
                     <ButtonUser/>
                 </div>
+                <h2 className='font-mono text-center text-3xl text-fuchsia-700'>Home Music</h2>
 
                 <div className='grid gap-y-6 pt-6'>
                     <HomeContainer data={allSongs} />

@@ -3,10 +3,10 @@ import { BsFillPlayFill } from 'react-icons/bs'
 import { actionType } from '../../context/reducer'
 import { useStateValue } from '../../context/StateProvider'
 import images from '../../assets/images'
-import { addFavourites, addPlayList, getFavourites } from '../../api'
+import { addFavourites, addPlayList, deleteFavourites, getFavourites } from '../../api'
 import ModalSuccess from '../modalNotify/modalsucces'
 
-function PlayCard({ data, index}) {
+function PlayCardFauvorites({ data, index}) {
     const [{ songIndex, isSongPlaying , user }, dispath] = useStateValue()
 
     const addToContext = () => {
@@ -24,42 +24,67 @@ function PlayCard({ data, index}) {
             })
         }
     }
+    const notifyAdded = () =>{
+        alert("Added playlist")
+    }
     const addToFavourites = (id) => {
+        console.log()
         if(user.user.songs.includes(id)){
-            alert("Added Fauvorites")
+            alert("đã thêm vào favourites")
         }
         else{
             let  dataAdd= {
-                    id_user: user.user._id,
-                    id_music: id
-                }
-                console.log(dataAdd)
-            
-            addFavourites(dataAdd).then((data1) => {
-                console.log('datafavorite',data1)
-                if(data1.success== true){
-                    getFavourites(user.user._id).then((data) => {
-                        console.log('datafavorite',data.user.songs)
-                        dispath({
-                            type : actionType.SET_All_FAVORITE,
-                            listFauvorites : data.user.songs,
-                        })
+                id_user: user.user._id,
+                id_music: id
+            }
+            console.log(dataAdd)
+        
+        addFavourites(dataAdd).then((data1) => {
+            console.log('datafavorite',data1)
+            if(data1.success== true){
+                getFavourites(user.user._id).then((data) => {
+                    console.log('datafavorite',data.user.songs)
+                    dispath({
+                        type : actionType.SET_All_FAVORITE,
+                        listFauvorites : data.user.songs,
                     })
-                    alert("add success")
-                }
-                dispath({
-                    type : actionType.SET_ADD_FAVORITE,
-                    // user : data1.user,
                 })
+                alert("add success")
+            }
+            dispath({
+                type : actionType.SET_ADD_FAVORITE,
+                // user : data1.user,
             })
+        })
         }
     }
-    const addToPlayList = (id) => {
-        if(user.user.songs.includes(id)){
-            alert("Added playlist")
+    const deleteFauvorites = (id) =>{
+        let  dataAdd= {
+            id_user: user.user._id,
+            id_music: id
         }
-        else{
-            let  dataAdd= {
+        console.log(dataAdd)
+    
+    deleteFavourites(dataAdd).then((data1) => {
+        console.log('datafavorite',data1)
+        if(data1.success== true){
+            getFavourites(user.user._id).then((data) => {
+                console.log('datafavorite',data.user.songs)
+                dispath({
+                    type : actionType.SET_All_FAVORITE,
+                    listFauvorites : data.user.songs,
+                })
+            })
+            alert("delete success")
+        }
+        dispath({
+            type : actionType.SET_DELETE_FAVORITE,
+            deleteFauvorites : data1.success,
+        })
+    })
+    }
+    const addToPlayList = (id) => {
+        let  dataAdd= {
                 id_user: user.user._id,
                 id_music: id
             }
@@ -82,13 +107,17 @@ function PlayCard({ data, index}) {
                 addPlayList : data1.success,
             })
         })
-        }
-        
     }
 
     return ( 
         <div>
             <div className='bg-gray-900 p-4 rounded-md flex-1 '>
+                <div className='flex justify-end'>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" onClick={()=>deleteFauvorites(data._id)} className="w-6 h-6 text-gray-50 text-base hover:text-red-600">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+
+                </div>
                 <div 
                 className='bg-gray-600 p-4 rounded-md flex-1 hover:bg-slate-200 group:'
                 onClick={addToContext}
@@ -109,10 +138,10 @@ function PlayCard({ data, index}) {
                         </p>
                     </div>
                 </div>
-            </div>
+                </div>
                 <div className='flex justify-around mt-1.5'>
-                <img onClick={()=>addToFavourites(data._id)} src={images.favourites} alt="logo" className={`cursor-pointer  duration-500 w-10  hover:bg-red-300`}/>
-                <img onClick={()=>addToPlayList(data._id)} src={images.playlist} alt="logo" className={`cursor-pointer  duration-500 w-10 hover:bg-red-300` }/>
+                    <img onClick={notifyAdded} src={images.favourites} alt="logo" className={`cursor-pointer  duration-500 w-10  hover:bg-red-300`}/>
+                    <img onClick={()=>addToPlayList(data._id)} src={images.playlist} alt="logo" className={`cursor-pointer  duration-500 w-10 hover:bg-red-300` }/>
                 </div>
             </div>
         </div>
@@ -120,4 +149,4 @@ function PlayCard({ data, index}) {
      );
 }
 
-export default PlayCard;
+export default PlayCardFauvorites;

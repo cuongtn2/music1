@@ -137,3 +137,62 @@ export const deleteAlbumById = async (id) => {
     }
 }
 
+//call api user (xem danh sách fauvorites)
+export const getFavourites = async (id) => {
+    try {
+       const res = await axios.get(`${baseURL}api/songs/user/${id}`)
+       console.log(res)
+       return res.data;
+    } catch (error) {
+        return null;
+    }
+} 
+export const addFavourites = async (data) => {
+    console.log('data',data)
+    let dataAdd = {
+        "_id": data.id_user
+    }
+    try {
+       const res = await axios.post(`${baseURL}api/songs/fauvorites/${data.id_music}`,dataAdd)
+       return res.data;
+    } catch (error) {
+        return null;
+    }
+} 
+export const deleteFavourites = async (data) => {
+    console.log('data',data)
+    let dataAdd = {
+        "_id": data.id_user
+    }
+    try {
+       const res = await axios.post(`${baseURL}api/songs/fauvoritesdetele/${data.id_music}`,dataAdd)
+       return res.data;
+    } catch (error) {
+        return null;
+    }
+} 
+export const addPlayList = async (data) => {
+    console.log('data',data)
+    let dataAdd = {
+        "_id": data.id_user
+    }
+    try {
+       const res = await axios.post(`${baseURL}api/songs/playlist/${data.id_music}`,dataAdd)
+       return res.data;
+    } catch (error) {
+        return null;
+    }
+} 
+export const deletePlaylist = async (data) => {
+    console.log('data',data)
+    let dataAdd = {
+        "_id": data.id_user
+    }
+    try {
+       const res = await axios.post(`${baseURL}api/songs/playlistdetele/${data.id_music}`,dataAdd)
+       return res.data;
+    } catch (error) {
+        return null;
+    }
+}
+

@@ -32,6 +32,7 @@ function Login({setAuth}) {
                     if(userCred) {
                         userCred.getIdToken().then((token) => {
                             validateUser(token).then((data) => {
+                                console.log(data)
                                 dispatch({
                                     type : actionType.SET_USER,
                                     user : data

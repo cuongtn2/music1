@@ -30,6 +30,18 @@ const UserSchema = mongoose.Schema({
         type : String,
         require : true,
     },
+    songs : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref: 'song'
+        }
+    ],
+    playlist : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref: 'song'
+        }
+    ]
   },
   {timestamps : true}
 )

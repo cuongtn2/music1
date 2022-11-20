@@ -12,4 +12,10 @@ export const initalState = {
     alertType: null,
     isSongPlaying : false,
     songIndex : 0,
+    listFauvorites: null,
+    deleteFauvorites : false,
+    listPlayList: null,
+    addPlayList : false,
+    deletePlayList : false,
+
 }
