@@ -55,7 +55,7 @@ function PlayCard({ data, index}) {
         }
     }
     const addToPlayList = (id) => {
-        if(user.user.songs.includes(id)){
+        if(user.user.playlist.includes(id)){
             alert("Added playlist")
         }
         else{
